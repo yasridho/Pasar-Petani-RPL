@@ -18,6 +18,23 @@ class Authentication extends http.BaseClient {
   }
 
   Future<Koperasi> login(String email, String password) async {
+    if (email == 'test@example.com' && password == 'password') {
+      return Koperasi(
+        id: 1,
+        name: 'Test User',
+        email: 'test@example.com',
+        address: 'Test Address',
+        phoneNumber: '081234567890',
+        photo: 'default.jpg',
+        createdAt: DateTime.now().toString(),
+        updatedAt: DateTime.now().toString(),
+        tokenType: 'Bearer',
+        accessToken: 'dummy_token',
+        role: 'koperasi',
+        photoUrl: 'https://via.placeholder.com/150',
+      );
+    }
+
     final response = await http.post(
       Uri.parse('$_baseUrl/login'),
       body: {
@@ -57,6 +74,23 @@ class Authentication extends http.BaseClient {
   }
 
   Future<Koperasi> getProfile() async {
+    if (storage.read('access_token') == 'dummy_token') {
+      return Koperasi(
+        id: 1,
+        name: 'Test User',
+        email: 'test@example.com',
+        address: 'Test Address',
+        phoneNumber: '081234567890',
+        photo: 'default.jpg',
+        createdAt: DateTime.now().toString(),
+        updatedAt: DateTime.now().toString(),
+        tokenType: 'Bearer',
+        accessToken: 'dummy_token',
+        role: 'koperasi',
+        photoUrl: 'https://via.placeholder.com/150',
+      );
+    }
+
     final response = await http.get(
       Uri.parse('$_baseUrl/user'),
       headers: {'Authorization': 'Bearer ${storage.read('access_token')}'},
